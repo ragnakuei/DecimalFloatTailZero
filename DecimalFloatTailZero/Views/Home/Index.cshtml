@@ -1,8 +1,55 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<DecimalFloatTailZero.Models.OrderDto>
+
+@{
+    ViewData["Title"] = "List";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>List</h1>
+<div id="app"
+     style="display: none">
+    <p>
+        <a v-bind:href="createUrl">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>名稱</th>
+                <th>總計</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="order in vm">
+                <td>{{order.Name}}</td>
+                <td>{{order.Total}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+<script src="/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+<partial name="_CustomRequest"/>
+<script src="/lib/vue/vue.global.prod.js"></script>
+<script>
+  const { createApp, ref, reactive, onMounted, computed } = Vue;
+
+  const app = createApp({
+    setup(){
+
+      const createUrl = '@Url.Action("Create")';
+
+      const vm = reactive(@Html.Raw(ViewBag.OrdersJson));
+
+      return {
+        vm,
+        createUrl
+      }
+    }
+  });
+
+  const vm = app.mount('#app');
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("app").style.display = "block";
+  });
+
+</script>

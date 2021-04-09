@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DecimalFloatTailZero.Repositories;
+using DecimalFloatTailZero.Services;
+using Microsoft.Data.SqlClient;
 
 namespace DecimalFloatTailZero
 {
@@ -23,7 +26,21 @@ namespace DecimalFloatTailZero
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                    .AddJsonOptions(options =>
+                                    {
+                                        options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                                        options.JsonSerializerOptions.IgnoreNullValues     = true;
+                                    });
+
+            services.AddScoped<OrderService>();
+            services.AddScoped<OrderRepository>();
+            services.AddScoped<OrderCalculateService>();
+            services.AddScoped<SqlConnection>(provider =>
+                                              {
+                                                  var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                                                  return new SqlConnection(connectionString);
+                                              });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
