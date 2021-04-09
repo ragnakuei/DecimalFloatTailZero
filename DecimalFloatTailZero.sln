@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecimalFloatTailZero", "DecimalFloatTailZero\DecimalFloatTailZero.csproj", "{2305A202-596C-46C4-8B16-6D522021A611}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDb", "CreateDb\CreateDb.csproj", "{F6E241CE-81D1-4821-8323-8F726ACDCAE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2305A202-596C-46C4-8B16-6D522021A611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2305A202-596C-46C4-8B16-6D522021A611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2305A202-596C-46C4-8B16-6D522021A611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E241CE-81D1-4821-8323-8F726ACDCAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E241CE-81D1-4821-8323-8F726ACDCAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E241CE-81D1-4821-8323-8F726ACDCAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E241CE-81D1-4821-8323-8F726ACDCAE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
