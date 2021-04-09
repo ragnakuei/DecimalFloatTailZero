@@ -4,14 +4,16 @@ using CreateDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreateDb.Migrations
 {
     [DbContext(typeof(DecimalFloatTailZeroContext))]
-    partial class DecimalFloatTailZeroContextModelSnapshot : ModelSnapshot
+    [Migration("20210409133008_OrderDetailAddColumnAmount")]
+    partial class OrderDetailAddColumnAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,12 +94,6 @@ namespace CreateDb.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier")
                         .HasComment("Guid");
-
-                    b.Property<string>("Item")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("項目");
 
                     b.Property<Guid>("OrderGuid")
                         .HasColumnType("uniqueidentifier")

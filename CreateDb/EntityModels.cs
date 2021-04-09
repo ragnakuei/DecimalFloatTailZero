@@ -84,6 +84,14 @@ public class OrderDetail
 	public Guid OrderGuid { get; set; }
 
 	/// <summary>
+	/// 項目
+	/// </summary>
+	[Display(Name = "項目", Prompt = "項目")]
+	[Required(ErrorMessage = "請填寫{0}")]
+	[StringLength(50, ErrorMessage = "{0} 長度要介於 {2} 及 {1} 之間")]
+	public string Item { get; set; }
+
+	/// <summary>
 	/// 單價
 	/// </summary>
 	[Display(Name = "單價", Prompt = "單價")]
@@ -97,6 +105,14 @@ public class OrderDetail
 	[Display(Name = "數量", Prompt = "數量")]
 	[Required(ErrorMessage = "請填寫{0}")]
 	public int Count { get; set; }
+
+	/// <summary>
+	/// 金額
+	/// </summary>
+	[Display(Name = "金額", Prompt = "金額")]
+	[Required(ErrorMessage = "請填寫{0}")]
+	[StringLength(30, ErrorMessage = "{0} 長度要介於 {2} 及 {1} 之間")]
+	public string Amount { get; set; }
 
 	/// <summary>
 	/// 備註

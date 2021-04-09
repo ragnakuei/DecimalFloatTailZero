@@ -109,6 +109,11 @@ internal class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
                .HasColumnType(SqlDbTypes.Uniqueidentifier) 
                .HasComment("訂單 Guid");
 
+        builder.Property(x => x.Item) 
+               .IsRequired()  
+               .HasColumnType(SqlDbTypes.Nvarchar(50)) 
+               .HasComment("項目");
+
         builder.Property(x => x.UnitPrice) 
                .IsRequired()  
                .HasColumnType(SqlDbTypes.Varchar(30)) 
@@ -118,6 +123,11 @@ internal class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
                .IsRequired()  
                .HasColumnType(SqlDbTypes.Int) 
                .HasComment("數量");
+
+        builder.Property(x => x.Amount) 
+               .IsRequired()  
+               .HasColumnType(SqlDbTypes.Varchar(30)) 
+               .HasComment("金額");
 
         builder.Property(x => x.Comment)   
                .HasColumnType(SqlDbTypes.Nvarchar(1000)) 
