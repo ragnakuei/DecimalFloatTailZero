@@ -4,14 +4,16 @@ using CreateDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreateDb.Migrations
 {
     [DbContext(typeof(DecimalFloatTailZeroContext))]
-    partial class DecimalFloatTailZeroContextModelSnapshot : ModelSnapshot
+    [Migration("20210409073504_OrderAddColumnName")]
+    partial class OrderAddColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

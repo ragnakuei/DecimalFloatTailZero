@@ -1,4 +1,3 @@
-
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,6 +21,14 @@ public class Order
 	[Display(Name = "Guid", Prompt = "Guid")]
 	[Required(ErrorMessage = "請填寫{0}")]
 	public Guid Guid { get; set; }
+
+	/// <summary>
+	/// 名稱
+	/// </summary>
+	[Display(Name = "名稱", Prompt = "名稱")]
+	[Required(ErrorMessage = "請填寫{0}")]
+	[StringLength(50, ErrorMessage = "{0} 長度要介於 {2} 及 {1} 之間")]
+	public string Name { get; set; }
 
 	/// <summary>
 	/// 小計
