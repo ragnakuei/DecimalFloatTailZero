@@ -1,11 +1,7 @@
-﻿using DecimalFloatTailZero.Models;
+﻿using System;
+using DecimalFloatTailZero.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using DecimalFloatTailZero.Extensions;
 using DecimalFloatTailZero.Services;
 
@@ -39,18 +35,52 @@ namespace DecimalFloatTailZero.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.OrderJson = new OrderDto
+                                {
+                                    Details = new OrderDetailDto[]
+                                                   {
+                                                       new OrderDetailDto()
+                                                   }
+                                }.ToJson();
+
+            ViewBag.EmptyOrderDetailJson = new OrderDetailDto().ToJson();
+
             return View();
         }
 
-        [HttpPost, Route("api/[Controller]")]
+        [HttpPost, Route("api/[Controller]/[Action]")]
         public IActionResult PostCreate([FromBody]OrderDto vm)
         {
+            _orderService.Create(vm);
+
             return Ok(vm);
         }
 
-        [HttpPost, Route("api/[Controller]")]
-        public IActionResult Calculate([FromBody]OrderDto vm)
+        [HttpGet, Route("[Controller]/[Action]/{orderGuid:guid}")]
+        public IActionResult Edit(Guid? orderGuid)
         {
+            var order = _orderService.GetOrder(orderGuid);
+
+            ViewBag.OrderJson = order.ToJson();
+
+            ViewBag.EmptyOrderDetailJson = new OrderDetailDto().ToJson();
+
+            return View();
+        }
+
+        // [HttpPost, Route("api/[Controller]/[Action]")]
+        // public IActionResult PostEdit([FromBody]OrderDto vm)
+        // {
+        //     _orderService.Edit(vm);
+        //
+        //     return Ok(vm);
+        // }
+
+        [HttpPost, Route("api/[Controller]/[Action]")]
+        public IActionResult ReCalculate([FromBody]OrderDto vm)
+        {
+            _orderCalculateService.ReCalculate(vm);
+
             return Ok(vm);
         }
     }

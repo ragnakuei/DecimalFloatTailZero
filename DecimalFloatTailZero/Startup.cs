@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DecimalFloatTailZero.Infra;
 using DecimalFloatTailZero.Repositories;
 using DecimalFloatTailZero.Services;
 using Microsoft.Data.SqlClient;
@@ -41,6 +42,9 @@ namespace DecimalFloatTailZero
                                                   var connectionString = Configuration.GetConnectionString("DefaultConnection");
                                                   return new SqlConnection(connectionString);
                                               });
+
+            Dapper.SqlMapper.ResetTypeHandlers();
+            Dapper.SqlMapper.AddTypeHandler(new AnsiStringToNullDecimalHandler());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +60,7 @@ namespace DecimalFloatTailZero
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -64,11 +69,11 @@ namespace DecimalFloatTailZero
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+                             {
+                                 endpoints.MapControllerRoute(
+                                                              name: "default",
+                                                              pattern: "{controller=Home}/{action=Index}/{id?}");
+                             });
         }
     }
 }

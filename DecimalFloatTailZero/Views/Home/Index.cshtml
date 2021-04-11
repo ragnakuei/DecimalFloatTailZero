@@ -1,6 +1,4 @@
-﻿@model IEnumerable<DecimalFloatTailZero.Models.OrderDto>
-
-@{
+﻿@{
     ViewData["Title"] = "List";
 }
 
@@ -12,23 +10,31 @@
     </p>
     <table class="table">
         <thead>
-            <tr>
-                <th>名稱</th>
-                <th>總計</th>
-            </tr>
+        <tr>
+            <th>名稱</th>
+            <th>總計</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            <tr v-for="order in vm">
-                <td>{{order.Name}}</td>
-                <td>{{order.Total}}</td>
-            </tr>
+        <tr v-for="order in vm">
+            <td>{{order.Name}}</td>
+            <td>{{order.Total}}</td>
+            <td>
+                <button type="button"
+                        class="btn btn-primary text-nowrap"
+                        v-on:click="Edit(order.Guid)">
+                    編輯
+                </button>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
 
-<script src="/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
-<partial name="_CustomRequest"/>
-<script src="/lib/vue/vue.global.prod.js"></script>
+<script src="/lib/jquery/dist/jquery.js"
+        asp-append-version="true"></script>
+<script src="/lib/vue/3.0.11/vue.global.prod.js"></script>
 <script>
   const { createApp, ref, reactive, onMounted, computed } = Vue;
 
@@ -37,11 +43,19 @@
 
       const createUrl = '@Url.Action("Create")';
 
+      const editUrl = '@Url.Action("Edit")';
+
       const vm = reactive(@Html.Raw(ViewBag.OrdersJson));
+
+      const Edit = function (orderGuid)
+      {
+          window.location.href = editUrl + '/' + orderGuid;
+      }
 
       return {
         vm,
-        createUrl
+        createUrl,
+        Edit,
       }
     }
   });

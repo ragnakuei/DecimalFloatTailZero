@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using DecimalFloatTailZero.Controllers;
+using DecimalFloatTailZero.Infra;
 
 namespace DecimalFloatTailZero.Models
 {
@@ -18,18 +20,21 @@ namespace DecimalFloatTailZero.Models
         /// <summary>
         /// 小計
         /// </summary>
-        public string SubTotal { get; set; }
+        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public decimal? SubTotal { get; set; }
 
         /// <summary>
         /// 營業稅
         /// </summary>
-        public string BusinessTax { get; set; }
+        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public decimal? BusinessTax { get; set; }
 
         /// <summary>
         /// 總計
         /// </summary>
-        public string Total { get; set; }
+        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public decimal? Total { get; set; }
 
-        public OrderDetailDto[] OrderDetailDtos { get; set; }
+        public OrderDetailDto[] Details { get; set; }
     }
 }

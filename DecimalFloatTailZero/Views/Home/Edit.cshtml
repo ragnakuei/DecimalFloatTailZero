@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <style>
@@ -21,7 +21,7 @@
     }
 </style>
 
-<h1>建立訂單</h1>
+<h1>編輯訂單</h1>
 
 <div id="app"
      v-cloak>
@@ -150,10 +150,10 @@
                         v-on:click="ReCalculate()">
                     重新計算
                 </button>
-                <button type="submit"
-                        class="btn btn-primary mx-1">
-                    送出
-                </button>
+                @* <button type="submit" *@
+                @*         class="btn btn-primary mx-1"> *@
+                @*     送出 *@
+                @* </button> *@
             </div>
         </div>
         <div class="row my-1">
@@ -176,7 +176,7 @@
 
       const reCalculateUrl = '@Url.Action("ReCalculate")';
 
-      const submitUrl = '@Url.Action("PostCreate")';
+      const submitUrl = '@Url.Action("PostEdit")';
 
       const backUrl = '@Url.Action("Index")';
 
