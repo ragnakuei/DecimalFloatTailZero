@@ -54,6 +54,13 @@ public class Order
 	[StringLength(30, ErrorMessage = "{0} 長度要介於 {2} 及 {1} 之間")]
 	public string Total { get; set; }
 
+	/// <summary>
+	/// 浮點數解析度
+	/// </summary>
+	[Display(Name = "浮點數解析度", Prompt = "浮點數解析度")]
+	[Required(ErrorMessage = "請填寫{0}")]
+	public decimal FloatPrecision { get; set; }
+
 
 }
 

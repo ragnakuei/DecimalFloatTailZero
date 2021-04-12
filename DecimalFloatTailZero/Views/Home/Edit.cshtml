@@ -29,14 +29,35 @@
           v-on:submit.prevent="Submit()">
         <h4>訂單</h4>
         <hr />
-        <div class="form-group form-inline">
-            <label for="Name"
-                   class="control-label">
-                名稱
-            </label>
-            <input id="Name"
-                   v-model="vm.Name"
-                   class="form-control mx-3" />
+        <div class="row my-1">
+            <dt class = "col-sm-2 text-left mx-3 text-sm-right ">
+                <label for="Name"
+                       class="control-label text-nowrap">
+                    名稱
+                </label>
+            </dt>
+            <dt class = "col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                <input id="Name"
+                       v-model="vm.Data.Name"
+                       class="form-control mx-3" />
+            </dt>
+        </div>
+        <div class="row my-1">
+            <dt class = "col-sm-2 text-left mx-3 text-sm-right ">
+                  <label for="FloatPrecision"
+                           class="control-label text-nowrap">
+                        浮點數位數
+                    </label>
+            </dt>
+            <dt class = "col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                  <input id="FloatPrecision"
+                         type="number"
+                         v-bind:step="minFloatPrecistion"
+                         min="0"
+                         max="0.1"
+                         v-model="vm.Data.FloatPrecision"
+                         class="form-control mx-3" />
+            </dt>
         </div>
         <br>
         <br>
@@ -71,6 +92,7 @@
                         style="width: 70px;">
                         <button type="button"
                                 class="btn btn-primary text-nowrap"
+                                disabled
                                 v-on:click="AddDetail()">
                             新增明細
                         </button>
@@ -78,7 +100,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(detail, detailIndex) in vm.Details"
+                <tr v-for="(detail, detailIndex) in vm.Data.Details"
                     :key="detailIndex">
                     <td>
                         <div class="row">
@@ -90,7 +112,7 @@
                     <td>
                         <div class="row">
                             <input type="number"
-                                   v-bind:step="floatPrecision"
+                                   v-bind:step="vm.FloatPrecision"
                                    class="form-control mx-3"
                                    v-model="detail.UnitPrice" />
                         </div>
@@ -106,6 +128,7 @@
                     <td>{{ detail.Amount }}</td>
                     <td>
                         <button type="button"
+                                disabled
                                 class="btn btn-danger text-nowrap"
                                 v-on:click="DeleteDetail(detailIndex)">
                             刪除
@@ -118,7 +141,7 @@
                         style="border: none;">
                         小計
                     </td>
-                    <td>{{vm.SubTotal}}</td>
+                    <td>{{vm.Data.SubTotal}}</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -127,7 +150,7 @@
                         style="border: none;">
                         營業稅
                     </td>
-                    <td>{{vm.BusinessTax}}</td>
+                    <td>{{vm.Data.BusinessTax}}</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -136,7 +159,7 @@
                         style="border: none;">
                         總計
                     </td>
-                    <td>{{vm.Total}}</td>
+                    <td>{{vm.Data.Total}}</td>
                     <td></td>
                 </tr>
                 </tbody>
@@ -147,13 +170,15 @@
             <div class="col-auto">
                 <button type="button"
                         class="btn btn-primary mx-1"
+                        disabled
                         v-on:click="ReCalculate()">
                     重新計算
                 </button>
-                @* <button type="submit" *@
-                @*         class="btn btn-primary mx-1"> *@
-                @*     送出 *@
-                @* </button> *@
+                <button type="submit"
+                        disabled
+                        class="btn btn-primary mx-1">
+                    送出
+                </button>
             </div>
         </div>
         <div class="row my-1">
@@ -184,17 +209,16 @@
 
       const emptyOrderDetail = @Html.Raw(ViewBag.EmptyOrderDetailJson);
 
-      const floatPrecision = 0.0001;
+      const minFloatPrecistion = "0.0000000001";
 
       const AddDetail = function ()
       {
-          vm.Details.push(JSON.parse(JSON.stringify(emptyOrderDetail)));
+          vm.Data.Details.push(JSON.parse(JSON.stringify(emptyOrderDetail)));
       }
 
       const DeleteDetail = function (detailIndex)
       {
-          console.log(detailIndex);
-          vm.Details.splice(detailIndex, 1);
+          vm.Data.Details.splice(detailIndex, 1);
       }
 
       const ReCalculate = function ()
@@ -208,12 +232,8 @@
                     contentType: 'application/json',
                 }).done(function(e)
                 {
-                   // vm = reactive(e);
-
-                   vm.SubTotal    = e.SubTotal;
-                   vm.BusinessTax = e.BusinessTax;
-                   vm.Details     = e.Details;
-                   vm.Total       = e.Total;
+                   vm.Data = e.Data;
+                   vm.FloatPrecision = e.FloatPrecision;
                 })
       }
 
@@ -223,7 +243,7 @@
                 {
                     url: submitUrl,
                     type: 'post',
-                    data: JSON.stringify(vm),
+                    data: JSON.stringify(vm.Data),
                     dataType: 'json',
                     contentType: 'application/json',
                 }).done(function(e)
@@ -236,7 +256,7 @@
         submitUrl,
         backUrl,
         vm,
-        floatPrecision,
+        minFloatPrecistion,
         AddDetail,
         DeleteDetail,
         ReCalculate,

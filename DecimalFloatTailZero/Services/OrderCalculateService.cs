@@ -7,34 +7,34 @@ namespace DecimalFloatTailZero.Services
 {
     public class OrderCalculateService
     {
-        public void ReCalculate(OrderDto vm)
+        public void ReCalculate(VueDto<OrderDto> vueDto)
         {
-            vm.SubTotal = 0m;
+            vueDto.Data.SubTotal = 0m;
 
-            vm.Details
+            vueDto.Data.Details
               .ForEach(d =>
                        {
                            d.Amount    =  d.UnitPrice * d.Count;
-                           vm.SubTotal += d.Amount;
+                           vueDto.Data.SubTotal += d.Amount;
                        });
 
-            vm.BusinessTax = vm.SubTotal * 0.5m;
+            vueDto.Data.BusinessTax = vueDto.Data.SubTotal * 0.5m;
 
-            vm.Total = vm.SubTotal + vm.BusinessTax;
+            vueDto.Data.Total = vueDto.Data.SubTotal + vueDto.Data.BusinessTax;
 
             // 四捨五入及補 0
 
-            var fixDigits = 4;
-            vm.Details
+            var fixDigits = CommonExtensions.ToFloatPrecisionDigit(vueDto.Data.FloatPrecision.GetValueOrDefault());
+            vueDto.Data.Details
               .ForEach(d =>
                        {
                            d.UnitPrice = d.UnitPrice?.ToFixAndFillTailZero(fixDigits);
                            d.Amount    = d.Amount?.ToFixAndFillTailZero(fixDigits);
                        });
 
-            vm.SubTotal    = vm.SubTotal?.ToFixAndFillTailZero(fixDigits);
-            vm.BusinessTax = vm.BusinessTax?.ToFixAndFillTailZero(fixDigits);
-            vm.Total       = vm.Total?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.SubTotal    = vueDto.Data.SubTotal?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.BusinessTax = vueDto.Data.BusinessTax?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.Total       = vueDto.Data.Total?.ToFixAndFillTailZero(fixDigits);
         }
     }
 }

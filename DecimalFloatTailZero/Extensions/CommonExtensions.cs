@@ -21,6 +21,25 @@ namespace DecimalFloatTailZero.Extensions
         }
 
         /// <summary>
+        /// 取出小數位數，例：將 0.0001 轉成 4
+        /// </summary>
+        public static int ToFloatPrecisionDigit(decimal floatPrecision)
+        {
+            if (floatPrecision == 0m)
+            {
+                return 0;
+            }
+
+            var splitParts = floatPrecision.ToString().Split('.');
+            if (splitParts.Length != 2)
+            {
+                return 0;
+            }
+
+            return splitParts[1].Length;
+        }
+
+        /// <summary>
         /// 四捨五入 + 補齊浮點數 0
         /// </summary>
         public static decimal ToFixAndFillTailZero(this decimal input, int digits)
@@ -94,7 +113,7 @@ namespace DecimalFloatTailZero.Extensions
 
         public static decimal ToDecimal(this string input)
         {
-            if (decimal.TryParse(input, out decimal result))
+            if (decimal.TryParse(input, System.Globalization.NumberStyles.Float, null, out decimal result))
             {
                 return result;
             }
@@ -104,7 +123,7 @@ namespace DecimalFloatTailZero.Extensions
 
         public static decimal? ToNullableDecimal(this string input)
         {
-            if (decimal.TryParse(input, out decimal result))
+            if (decimal.TryParse(input, System.Globalization.NumberStyles.Float, null, out decimal result))
             {
                 return result;
             }

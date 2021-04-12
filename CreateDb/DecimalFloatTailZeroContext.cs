@@ -72,6 +72,11 @@ internal class OrderConfiguration : IEntityTypeConfiguration<Order>
                .HasColumnType(SqlDbTypes.Varchar(30)) 
                .HasComment("總計");
 
+        builder.Property(x => x.FloatPrecision) 
+               .IsRequired()  
+               .HasColumnType(SqlDbTypes.Numeric(12,10)) 
+               .HasComment("浮點數解析度");
+
 
          // 以下是 FK 設定
     }

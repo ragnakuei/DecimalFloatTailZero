@@ -39,8 +39,8 @@ FROM [dbo].[Order] [o]
                 try
                 {
                     var sql = @"
-INSERT INTO [dbo].[Order]([Guid], [Name], [SubTotal], [BusinessTax], [Total])
-VALUES (@Guid, @Name, @SubTotal, @BusinessTax, @Total)
+INSERT INTO [dbo].[Order]([Guid], [Name], [SubTotal], [BusinessTax], [Total], [FloatPrecision])
+VALUES (@Guid, @Name, @SubTotal, @BusinessTax, @Total, @FloatPrecision)
 ";
                     var orderParam = new DynamicParameters();
                     orderParam.AddDynamicParams(vm);

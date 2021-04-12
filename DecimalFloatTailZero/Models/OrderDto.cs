@@ -35,6 +35,9 @@ namespace DecimalFloatTailZero.Models
         [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
         public decimal? Total { get; set; }
 
+        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public decimal? FloatPrecision { get; set; }
+
         public OrderDetailDto[] Details { get; set; }
     }
 }

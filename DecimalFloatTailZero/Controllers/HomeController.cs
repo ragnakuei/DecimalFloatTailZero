@@ -35,12 +35,15 @@ namespace DecimalFloatTailZero.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.OrderJson = new OrderDto
+            ViewBag.OrderJson = new VueDto<OrderDto>
                                 {
-                                    Details = new OrderDetailDto[]
-                                                   {
-                                                       new OrderDetailDto()
-                                                   }
+                                    Data = new OrderDto
+                                           {
+                                               Details = new OrderDetailDto[]
+                                                         {
+                                                             new OrderDetailDto()
+                                                         }
+                                           }
                                 }.ToJson();
 
             ViewBag.EmptyOrderDetailJson = new OrderDetailDto().ToJson();
@@ -61,7 +64,10 @@ namespace DecimalFloatTailZero.Controllers
         {
             var order = _orderService.GetOrder(orderGuid);
 
-            ViewBag.OrderJson = order.ToJson();
+            ViewBag.OrderJson = new VueDto<OrderDto>
+                                {
+                                    Data = order
+                                }.ToJson();
 
             ViewBag.EmptyOrderDetailJson = new OrderDetailDto().ToJson();
 
@@ -77,11 +83,11 @@ namespace DecimalFloatTailZero.Controllers
         // }
 
         [HttpPost, Route("api/[Controller]/[Action]")]
-        public IActionResult ReCalculate([FromBody]OrderDto vm)
+        public IActionResult ReCalculate([FromBody]VueDto<OrderDto> vueDto)
         {
-            _orderCalculateService.ReCalculate(vm);
+            _orderCalculateService.ReCalculate(vueDto);
 
-            return Ok(vm);
+            return Ok(vueDto);
         }
     }
 }
