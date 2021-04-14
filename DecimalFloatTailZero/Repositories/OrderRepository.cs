@@ -48,8 +48,8 @@ VALUES (@Guid, @Name, @SubTotal, @BusinessTax, @Total, @FloatPrecision)
                     _sqlConnection.Execute(sql, orderParam, trans);
 
                     sql = @"
-INSERT INTO [dbo].[OrderDetail]([Guid], [Item], [OrderGuid], [UnitPrice], [Count], [Comment])
-VALUES (@Guid, @Item, @OrderGuid, @UnitPrice, @Count, @Comment)
+INSERT INTO [dbo].[OrderDetail]([Guid], [Item], [OrderGuid], [UnitPrice], [Count], [Amount], [Comment])
+VALUES (@Guid, @Item, @OrderGuid, @UnitPrice, @Count, @Amount, @Comment)
 ";
                     vm.Details
                       .ForEach(d =>
