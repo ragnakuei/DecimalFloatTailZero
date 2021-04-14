@@ -31,7 +31,7 @@ namespace DecimalFloatTailZero
                     .AddJsonOptions(options =>
                                     {
                                         options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                                        options.JsonSerializerOptions.IgnoreNullValues     = true;
+                                        // options.JsonSerializerOptions.IgnoreNullValues     = true;
                                     });
 
             services.AddScoped<OrderService>();

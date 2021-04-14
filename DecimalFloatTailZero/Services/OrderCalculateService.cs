@@ -9,32 +9,32 @@ namespace DecimalFloatTailZero.Services
     {
         public void ReCalculate(VueDto<OrderDto> vueDto)
         {
-            vueDto.Data.SubTotal = 0m;
+            vueDto.Data.SubTotalDecimal = 0m;
 
             vueDto.Data.Details
-              .ForEach(d =>
-                       {
-                           d.Amount    =  d.UnitPrice * d.Count;
-                           vueDto.Data.SubTotal += d.Amount;
-                       });
+                  .ForEach(d =>
+                           {
+                               d.AmountDecimal             =  d.UnitPriceDecimal * d.Count;
+                               vueDto.Data.SubTotalDecimal += d.AmountDecimal;
+                           });
 
-            vueDto.Data.BusinessTax = vueDto.Data.SubTotal * 0.5m;
+            vueDto.Data.BusinessTaxDecimal = vueDto.Data.SubTotalDecimal * 0.5m;
 
-            vueDto.Data.Total = vueDto.Data.SubTotal + vueDto.Data.BusinessTax;
+            vueDto.Data.TotalDecimal = vueDto.Data.SubTotalDecimal + vueDto.Data.BusinessTaxDecimal;
 
             // 四捨五入及補 0
 
-            var fixDigits = CommonExtensions.ToFloatPrecisionDigit(vueDto.Data.FloatPrecision.GetValueOrDefault());
+            var fixDigits = CommonExtensions.ToFloatPrecisionDigit(vueDto.Data.FloatPrecisionDecimal.GetValueOrDefault());
             vueDto.Data.Details
-              .ForEach(d =>
-                       {
-                           d.UnitPrice = d.UnitPrice?.ToFixAndFillTailZero(fixDigits);
-                           d.Amount    = d.Amount?.ToFixAndFillTailZero(fixDigits);
-                       });
+                  .ForEach(d =>
+                           {
+                               d.UnitPriceDecimal = d.UnitPriceDecimal?.ToFixAndFillTailZero(fixDigits);
+                               d.AmountDecimal    = d.AmountDecimal?.ToFixAndFillTailZero(fixDigits);
+                           });
 
-            vueDto.Data.SubTotal    = vueDto.Data.SubTotal?.ToFixAndFillTailZero(fixDigits);
-            vueDto.Data.BusinessTax = vueDto.Data.BusinessTax?.ToFixAndFillTailZero(fixDigits);
-            vueDto.Data.Total       = vueDto.Data.Total?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.SubTotalDecimal    = vueDto.Data.SubTotalDecimal?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.BusinessTaxDecimal = vueDto.Data.BusinessTaxDecimal?.ToFixAndFillTailZero(fixDigits);
+            vueDto.Data.TotalDecimal       = vueDto.Data.TotalDecimal?.ToFixAndFillTailZero(fixDigits);
         }
     }
 }

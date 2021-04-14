@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using DecimalFloatTailZero.Controllers;
+using DecimalFloatTailZero.Extensions;
 using DecimalFloatTailZero.Infra;
 
 namespace DecimalFloatTailZero.Models
@@ -20,23 +21,46 @@ namespace DecimalFloatTailZero.Models
         /// <summary>
         /// 小計
         /// </summary>
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? SubTotal { get; set; }
+        // [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public string SubTotal
+        {
+            get => SubTotalDecimal?.ToString();
+            set => SubTotalDecimal = value?.ToNullableDecimal();
+        }
+
+        public decimal? SubTotalDecimal;
 
         /// <summary>
         /// 營業稅
         /// </summary>
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? BusinessTax { get; set; }
+        // [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public string BusinessTax
+        {
+            get => BusinessTaxDecimal?.ToString();
+            set => BusinessTaxDecimal = value?.ToNullableDecimal();
+        }
+
+        public decimal? BusinessTaxDecimal;
 
         /// <summary>
         /// 總計
         /// </summary>
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? Total { get; set; }
+        public string Total
+        {
+            get => TotalDecimal?.ToString();
+            set => TotalDecimal = value?.ToNullableDecimal();
+        }
 
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? FloatPrecision { get; set; }
+        public decimal? TotalDecimal;
+
+        // [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
+        public string FloatPrecision
+        {
+            get => FloatPrecisionDecimal?.ToString();
+            set => FloatPrecisionDecimal = value?.ToNullableDecimal();
+        }
+
+        public decimal? FloatPrecisionDecimal;
 
         public OrderDetailDto[] Details { get; set; }
     }

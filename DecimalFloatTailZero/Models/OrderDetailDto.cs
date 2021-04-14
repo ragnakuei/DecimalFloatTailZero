@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using DecimalFloatTailZero.Extensions;
 using DecimalFloatTailZero.Infra;
 
 namespace DecimalFloatTailZero.Models
@@ -24,8 +25,13 @@ namespace DecimalFloatTailZero.Models
         /// <summary>
         /// 單價
         /// </summary>
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? UnitPrice { get; set; }
+        public string UnitPrice
+        {
+            get => UnitPriceDecimal?.ToString();
+            set => UnitPriceDecimal = value?.ToNullableDecimal();
+        }
+
+        public decimal? UnitPriceDecimal;
 
         /// <summary>
         /// 數量
@@ -35,8 +41,13 @@ namespace DecimalFloatTailZero.Models
         /// <summary>
         /// 金額
         /// </summary>
-        [JsonConverter(typeof(StringToNullableDecimalJsonConverter))]
-        public decimal? Amount { get; set; }
+        public string Amount
+        {
+            get => AmountDecimal?.ToString();
+            set => AmountDecimal = value?.ToNullableDecimal();
+        }
+
+        public decimal? AmountDecimal;
 
         /// <summary>
         /// 備註
