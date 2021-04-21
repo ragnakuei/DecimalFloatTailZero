@@ -18,11 +18,6 @@ namespace CreateDb.Ef_Core
                             .Build();
         }
 
-        public DecimalFloatTailZeroContextFactory(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
-
         public DecimalFloatTailZeroContext CreateDbContext(string[] args)
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
