@@ -1,9 +1,10 @@
 ﻿using System.IO;
+using CreateDb.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace CreateDb
+namespace CreateDb.Ef_Core
 {
     public class DecimalFloatTailZeroContextFactory : IDesignTimeDbContextFactory<DecimalFloatTailZeroContext>
     {
@@ -26,18 +27,20 @@ namespace CreateDb
         {
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
+            var appSettings = _configuration.Get<AppSettingsDto>();
+
             var optionBuilder = new DbContextOptionsBuilder<DecimalFloatTailZeroContext>()
                                .UseSqlServer(connectionString,
                                              builder =>
                                              {
                                                  builder.CommandTimeout(2400);
                                                  builder.EnableRetryOnFailure(2);
-                                                 builder.MigrationsHistoryTable("_MigrationsHistory", DbParameter.DefaultSchema);
+                                                 builder.MigrationsHistoryTable("_MigrationsHistory", appSettings.Db.DefaultSchema);
                                                  builder.MigrationsAssembly("CreateDb");
                                              })
                                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-            return new DecimalFloatTailZeroContext(optionBuilder.Options);
+            return new DecimalFloatTailZeroContext(optionBuilder.Options, _configuration);
         }
     }
 }

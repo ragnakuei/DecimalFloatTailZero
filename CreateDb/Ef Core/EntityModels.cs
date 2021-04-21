@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CreateDb
+namespace CreateDb.Ef_Core
 {
 /// <summary>
 /// 訂單主表

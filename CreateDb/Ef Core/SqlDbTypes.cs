@@ -1,4 +1,4 @@
-﻿namespace CreateDb
+﻿namespace CreateDb.Ef_Core
 {
     public static class SqlDbTypes
     {
